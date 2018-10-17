@@ -1,0 +1,37 @@
+Samantha Long
+
+
+1.Create a view showing the values of the product on hand.
+
+db.createView("ProductOnHand", "product",
+    [ { $project:{ "name:", $multiply: [ "price:", "qty:" ] } } ]
+    );
+
+Having syntax issues with this question.
+
+***********
+2.Select all the products and the category that the product is in.
+How many collections needed to be joined to recover the data?
+ 
+ Would need to srt by category first.
+ 
+db.createView("ProductsInCategory", "product",
+    [ { $project:{ "name", "category"} } ]
+    );
+    
+More syntax issues.
+We would need the product names and the product categories but they all come
+from the same collection.
+
+************
+3. Select the product name and the category name of all the products.
+
+db.createView("ProductandCategory", "product",
+    [ { $project:{ "name", "category"} } ]
+    );
+************
+4. Select all the products, the categories they belong to, and the company the product is made by. 
+
+
+************
+5. Update the company “Stanley” to “Stanley Black and Decker” and re-run.
