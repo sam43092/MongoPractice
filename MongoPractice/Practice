@@ -13,7 +13,7 @@ Having syntax issues with this question.
 2.Select all the products and the category that the product is in.
 How many collections needed to be joined to recover the data?
  
- Would need to srt by category first.
+ Would need to sort by category first. 
  
 db.createView("ProductsInCategory", "product",
     [ { $project:{ "name", "category"} } ]
@@ -26,12 +26,63 @@ from the same collection.
 ************
 3. Select the product name and the category name of all the products.
 
-db.createView("ProductandCategory", "product",
-    [ { $project:{ "name", "category"} } ]
-    );
+db.product.find(
+  {},       
+  { 
+    name : 1  
+  },
+  {
+    category: 1
+    }
+  );
 ************
 4. Select all the products, the categories they belong to, and the company the product is made by. 
 
+db.product.find(
+  {},         
+  { 
+    name : 1  
+  },
+  {
+    category: 1
+    },
+    {
+    company:1
+    }
+  );
+
+Problem: Only searches for the name and ignores the rest.
 
 ************
 5. Update the company “Stanley” to “Stanley Black and Decker” and re-run.
+How many documents needed to be updated?
+
+db.product.update({name: "32 Piece Ratchet Set"},{company: "Stanley Black and Decker"});
+db.product.update({name: "Hammer"},{company: "Stanley Black and Decker"});
+
+For this particular set two documents needed updating.
+ 
+ ************
+6. Select all the products in the tools category with a price greater than 10.00. 
+
+db.product.find({
+    price: {
+        $gt: 10.00
+    }
+});
+
+Now only those made by Stanley Black and Decker.
+
+db.product.find({
+    company: "Stanley",
+    price: {$gt: 10.00},
+});
+
+Problem: This will only return the first record.
+
+**************
+7.Delete the crest company.
+
+db.products.remove({ company: "Crest"});
+
+The command worked but the result was that it removed 0 items.
